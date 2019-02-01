@@ -17,3 +17,5 @@ after cloning to run the webpack dev server.
 Just me practising React. It is, however, a fully functional and rules-compliant
 implementation of TriPeaks solitaire, with accurate deck simulation, so you can
 play it if you want.
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
