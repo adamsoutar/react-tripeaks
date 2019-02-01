@@ -56,9 +56,9 @@ class App extends Component {
     }
   }
 
-  detectLoss () {
+  detectLoss (target) {
     if (
-      !movesLeft(this.state.rows, card) &&
+      !movesLeft(this.state.rows, target) &&
       this.state.deck.cards.length === 0
     ) {
       this.setState({
@@ -93,7 +93,7 @@ class App extends Component {
         })
       }
 
-      detectLoss()
+      this.detectLoss(card)
     }
   }
 
@@ -115,13 +115,14 @@ class App extends Component {
 
               <TargetHolder
                 onStockClick={() => {
+                  let card = this.state.deck.pick(1)[0]
                   this.setState({
-                    target: this.state.deck.pick(1)[0],
+                    target: card,
                     targetColour: getCardColour()
                   })
                   // Edge case loose condition where no table cards are flipped,
                   // but you can still run out of moves.
-                  detectLoss()
+                  this.detectLoss(card)
                 }}
                 dry={this.state.deck.cards.length === 0}
                 targetColour={this.state.targetColour}
