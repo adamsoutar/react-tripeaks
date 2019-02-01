@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import Rows from './components/rows'
 import TargetHolder from './components/targetHolder'
-import { GameDeck, hitsTarget, reveals, updateRevealed, picks, colours, getCardColour } from './game'
+import { GameDeck, hitsTarget, reveals, updateRevealed, picks, colours, getCardColour, allPicked } from './game'
 import styled from 'styled-components'
 import Media from 'react-media'
 
@@ -72,6 +72,11 @@ class App extends Component {
         target: card,
         targetColour: colours[r][i],
         forceRender: !this.state.forceRender
+      })
+      // TODO: Detect no remaining moves for loss
+      if (allPicked()) this.setState({
+        message: "You won!",
+        messageClickAction: () => { window.location.reload() }
       })
     }
   }

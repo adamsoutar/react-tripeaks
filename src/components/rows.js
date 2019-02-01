@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import { Card, CardGroup, CardLine, RowContainer } from './cardContainers'
 
+// I hate this. It sucks.
+// Row two has to have every two cards contained in a CardGroup for layout
 const Rows = props => (
   <RowContainer>
     {props.rows.map((r, i) => (
