@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Rows from './components/rows'
 import TargetHolder from './components/targetHolder'
 import { GameDeck, hitsTarget, reveals, updateRevealed, picks, colours, getCardColour } from './game'
@@ -10,6 +10,20 @@ const AppStyled = styled.div`
   position: fixed;
   top: calc(50% - 357px);
   left: calc(50% - 600px);
+`
+
+const Message = styled.div`
+  width: calc(100% - 104px);
+  z-index: 10;
+  border-left: 4px solid green;
+  height: 34px; background-color: #4bd185;
+  padding: 30px;
+  font-size: 17px;
+  line-height: 17px;
+  text-align: center;
+  position: absolute;
+  left: calc(50% - (50% - 26px));
+  top: calc(50% - 100px);
 `
 
 const WarningStyled = styled.div`
@@ -36,7 +50,9 @@ class App extends Component {
       ],
       target: deck.pick(1)[0],
       targetColour: getCardColour(),
-      forceRender: false
+      forceRender: false,
+      message: "To play, click a card that is one above or below the target card. If you can't find one, click the face-down deck to draw.",
+      messageClickAction: () => { this.setState({ message: "" }) }
     }
   }
 
@@ -66,23 +82,30 @@ class App extends Component {
         {
           matches => matches ? (
             <AppStyled>
-              <Rows
-                picks={picks}
-                reveals={reveals}
-                colours={colours}
-                onCardClick={this.handleCardClick.bind(this)}
-                rows={this.state.rows}/>
+              {this.state.message === '' ? (
+                <Fragment>
+                  <Rows
+                    picks={picks}
+                    reveals={reveals}
+                    colours={colours}
+                    onCardClick={this.handleCardClick.bind(this)}
+                    rows={this.state.rows}/>
 
-              <TargetHolder
-                onStockClick={() => {
-                  this.setState({
-                    target: this.state.deck.pick(1)[0],
-                    targetColour: getCardColour()
-                  })
-                }}
-                dry={this.state.deck.cards.length === 0}
-                targetColour={this.state.targetColour}
-                target={this.state.target}/>
+                  <TargetHolder
+                    onStockClick={() => {
+                      this.setState({
+                        target: this.state.deck.pick(1)[0],
+                        targetColour: getCardColour()
+                      })
+                    }}
+                    dry={this.state.deck.cards.length === 0}
+                    targetColour={this.state.targetColour}
+                    target={this.state.target}/>
+                  </Fragment>
+                            ) : (
+                <Message onClick={this.state.messageClickAction}>{this.state.message}<br />Click to dismiss</Message>
+              )}
+
             </AppStyled>
           ) : (
             <WarningStyled>
