@@ -4,20 +4,20 @@ let reveals = [
   getReturns(() => false, 3),
   getReturns(() => false, 6),
   getReturns(() => false, 9),
-  getReturns(() => true, 10),
+  getReturns(() => true, 10)
 ]
 let picks = [
   getReturns(() => false, 3),
   getReturns(() => false, 6),
   getReturns(() => false, 9),
-  getReturns(() => false, 10),
+  getReturns(() => false, 10)
 ]
 let coloursLeft = [26, 26]
 let colours = [
   getReturns(getCardColour, 3),
   getReturns(getCardColour, 6),
   getReturns(getCardColour, 9),
-  getReturns(getCardColour, 10),
+  getReturns(getCardColour, 10)
 ]
 
 function getReturns (func, num) {
@@ -92,8 +92,8 @@ class GameDeck {
     // https://stackoverflow.com/questions/6274339
     let a = this.cards
     for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]]
     }
     this.cards = a
   }

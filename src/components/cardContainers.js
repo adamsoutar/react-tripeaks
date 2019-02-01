@@ -38,14 +38,14 @@ const CardGroup = styled.div`
 `
 
 const CardLine = styled.div`
-  ${ props => props.margined && css`
+  ${props => props.margined && css`
     margin-top: -50px;
   `}
   width: 100%; height: 155px;
   text-align: center;
   display: flex;
   justify-content: center;
-  ${ props => props.spaceEvenly && css`
+  ${props => props.spaceEvenly && css`
     justify-content: space-evenly;
   `}
   position: relative;

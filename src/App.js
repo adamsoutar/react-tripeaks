@@ -52,14 +52,13 @@ class App extends Component {
       targetColour: getCardColour(),
       forceRender: false,
       message: "To play, click a card that is one above or below the target card. If you can't find one, click the face-down deck to draw.",
-      messageClickAction: () => { this.setState({ message: "" }) }
+      messageClickAction: () => { this.setState({ message: '' }) }
     }
   }
 
   handleCardClick (r, i) {
     let card = this.state.rows[r][i]
     if (!hitsTarget(card, this.state.target)) return
-
 
     if (reveals[r][i]) {
       picks[r][i] = true
@@ -75,29 +74,33 @@ class App extends Component {
       })
 
       // Detect win
-      if (allPicked()) this.setState({
-        message: "You won!",
-        messageClickAction: () => { window.location.reload() }
-      })
+      if (allPicked()) {
+        this.setState({
+          message: 'You won!',
+          messageClickAction: () => { window.location.reload() }
+        })
+      }
 
       // Detect loss
       if (
         !movesLeft(this.state.rows, card) &&
         this.state.deck.cards.length === 0
-      ) this.setState({
-        message: "You lost, there are no remaining moves to make.",
-        messageClickAction: () => { window.location.reload() }
-      })
+      ) {
+        this.setState({
+          message: 'You lost, there are no remaining moves to make.',
+          messageClickAction: () => { window.location.reload() }
+        })
+      }
     }
   }
 
-  render() {
+  render () {
     return (
       <Media query={{ minWidth: 1200, minHeight: 715 }}>
         {
           matches => matches ? (
             <AppStyled>
-              {this.state.message === '' ? <Fragment/> : (
+              {this.state.message === '' ? <Fragment /> : (
                 <Message onClick={this.state.messageClickAction}>{this.state.message}<br />Click to dismiss</Message>
               )}
               <Rows
@@ -105,7 +108,7 @@ class App extends Component {
                 reveals={reveals}
                 colours={colours}
                 onCardClick={this.handleCardClick.bind(this)}
-                rows={this.state.rows}/>
+                rows={this.state.rows} />
 
               <TargetHolder
                 onStockClick={() => {
@@ -116,7 +119,7 @@ class App extends Component {
                 }}
                 dry={this.state.deck.cards.length === 0}
                 targetColour={this.state.targetColour}
-                target={this.state.target}/>
+                target={this.state.target} />
             </AppStyled>
           ) : (
             <WarningStyled>

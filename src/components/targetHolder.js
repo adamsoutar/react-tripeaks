@@ -14,12 +14,12 @@ const TargetHolderStyled = styled.div`
 const TargetHolder = props => (
   <TargetHolderStyled>
     <Card
-      style={{float: 'right'}}
+      style={{ float: 'right' }}
       colour={props.targetColour}
       revealed>{props.target}</Card>
     <Card
       picked={props.dry}
-      onClick={props.onStockClick}/>
+      onClick={props.onStockClick} />
   </TargetHolderStyled>
 )
 
