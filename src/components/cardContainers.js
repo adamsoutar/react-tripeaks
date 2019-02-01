@@ -18,11 +18,11 @@ const Card = styled.div`
 
   ${props => props.revealed && css`
     background-image: radial-gradient(#fff, #c6c6c6);
-    color: black;
+    color: ${props => props.colour};
   `}
 
   ${props => props.picked && css`
-    z-index: 0;
+    pointer-events: none;
     opacity: 0;
   `}
 `
