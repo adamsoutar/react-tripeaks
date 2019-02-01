@@ -12,6 +12,8 @@ const Card = styled.div`
   text-align: center;
   font-weight: bold;
   float: left;
+  user-select: none;
+  pointer-events: all;
 
   background-image: radial-gradient(#3a6eb2, #2a5082);
   color: transparent;
@@ -22,7 +24,7 @@ const Card = styled.div`
   `}
 
   ${props => props.picked && css`
-    pointer-events: none;
+    pointer-events: none !important;
     opacity: 0;
   `}
 `
@@ -32,6 +34,7 @@ const CardGroup = styled.div`
   left: ${props => props.left}px;
   width: 240px; height: 155px;
   white-space:nowrap;
+  pointer-events: none;
 `
 
 const CardLine = styled.div`
@@ -46,6 +49,7 @@ const CardLine = styled.div`
     justify-content: space-evenly;
   `}
   position: relative;
+  pointer-events: none;
   z-index: ${props => props.zIndex};
 `
 
