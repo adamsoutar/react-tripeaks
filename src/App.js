@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import Rows from './components/rows'
 import TargetHolder from './components/targetHolder'
-import { GameDeck, hitsTarget, reveals, updateRevealed, picks, colours, getCardColour, allPicked } from './game'
+import { GameDeck, hitsTarget, reveals, updateRevealed, picks, colours, movesLeft, getCardColour, allPicked } from './game'
 import styled from 'styled-components'
 import Media from 'react-media'
 
@@ -73,9 +73,19 @@ class App extends Component {
         targetColour: colours[r][i],
         forceRender: !this.state.forceRender
       })
-      // TODO: Detect no remaining moves for loss
+
+      // Detect win
       if (allPicked()) this.setState({
         message: "You won!",
+        messageClickAction: () => { window.location.reload() }
+      })
+
+      // Detect loss
+      if (
+        !movesLeft(this.state.rows, card) &&
+        this.state.deck.cards.length === 0
+      ) this.setState({
+        message: "You lost, there are no remaining moves to make.",
         messageClickAction: () => { window.location.reload() }
       })
     }
@@ -87,30 +97,26 @@ class App extends Component {
         {
           matches => matches ? (
             <AppStyled>
-              {this.state.message === '' ? (
-                <Fragment>
-                  <Rows
-                    picks={picks}
-                    reveals={reveals}
-                    colours={colours}
-                    onCardClick={this.handleCardClick.bind(this)}
-                    rows={this.state.rows}/>
-
-                  <TargetHolder
-                    onStockClick={() => {
-                      this.setState({
-                        target: this.state.deck.pick(1)[0],
-                        targetColour: getCardColour()
-                      })
-                    }}
-                    dry={this.state.deck.cards.length === 0}
-                    targetColour={this.state.targetColour}
-                    target={this.state.target}/>
-                  </Fragment>
-                            ) : (
+              {this.state.message === '' ? <Fragment/> : (
                 <Message onClick={this.state.messageClickAction}>{this.state.message}<br />Click to dismiss</Message>
               )}
+              <Rows
+                picks={picks}
+                reveals={reveals}
+                colours={colours}
+                onCardClick={this.handleCardClick.bind(this)}
+                rows={this.state.rows}/>
 
+              <TargetHolder
+                onStockClick={() => {
+                  this.setState({
+                    target: this.state.deck.pick(1)[0],
+                    targetColour: getCardColour()
+                  })
+                }}
+                dry={this.state.deck.cards.length === 0}
+                targetColour={this.state.targetColour}
+                target={this.state.target}/>
             </AppStyled>
           ) : (
             <WarningStyled>

@@ -60,12 +60,23 @@ function getCardColour () {
   return ['black', 'red'][colour]
 }
 
-function allPicked() {
+function allPicked () {
   let allP = true
   for (let x = 0; x < picks.length; x++) {
     for (let y = 0; y < picks[x].length; y++) if (!picks[x][y]) allP = false
   }
   return allP
+}
+
+function movesLeft (rows, target) {
+  for (let x = 0; x < picks.length; x++) {
+    for (let y = 0; y < picks[x].length; y++) {
+      if (reveals[x][y] && !picks[x][y]) {
+        if (hitsTarget(rows[x][y], target)) return true
+      }
+    }
+  }
+  return false
 }
 
 // These are prefixed because there are React elements like <Card/>
@@ -94,4 +105,4 @@ class GameDeck {
   }
 }
 
-export { GameDeck, hitsTarget, reveals, updateRevealed, picks, colours, getCardColour, allPicked }
+export { GameDeck, hitsTarget, reveals, updateRevealed, picks, colours, movesLeft, getCardColour, allPicked }
