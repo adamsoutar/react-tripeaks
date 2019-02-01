@@ -56,6 +56,18 @@ class App extends Component {
     }
   }
 
+  detectLoss () {
+    if (
+      !movesLeft(this.state.rows, card) &&
+      this.state.deck.cards.length === 0
+    ) {
+      this.setState({
+        message: 'You lost, there are no remaining moves to make.',
+        messageClickAction: () => { window.location.reload() }
+      })
+    }
+  }
+
   handleCardClick (r, i) {
     let card = this.state.rows[r][i]
     if (!hitsTarget(card, this.state.target)) return
@@ -81,16 +93,7 @@ class App extends Component {
         })
       }
 
-      // Detect loss
-      if (
-        !movesLeft(this.state.rows, card) &&
-        this.state.deck.cards.length === 0
-      ) {
-        this.setState({
-          message: 'You lost, there are no remaining moves to make.',
-          messageClickAction: () => { window.location.reload() }
-        })
-      }
+      detectLoss()
     }
   }
 
@@ -116,6 +119,9 @@ class App extends Component {
                     target: this.state.deck.pick(1)[0],
                     targetColour: getCardColour()
                   })
+                  // Edge case loose condition where no table cards are flipped,
+                  // but you can still run out of moves.
+                  detectLoss()
                 }}
                 dry={this.state.deck.cards.length === 0}
                 targetColour={this.state.targetColour}
