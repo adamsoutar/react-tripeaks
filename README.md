@@ -4,7 +4,7 @@ A React based implementation of TriPeaks solitaire.
 
 ## Play the game
 
-Play it on [GitHub Pages](https://adybo123.github.io/react-tripeaks/) .
+Play it on [GitHub Pages](https://adamsoutar.github.io/react-tripeaks/) .
 
 ## Play with the code
 
